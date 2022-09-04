@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -25,7 +26,11 @@ public class JokeResource {
 
     @GetMapping
     public ResponseEntity<String> getAllJokes() {
-        return ResponseEntity.ok(bookService.findAll());
+        try {
+            return ResponseEntity.ok(bookService.findAll());
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }
